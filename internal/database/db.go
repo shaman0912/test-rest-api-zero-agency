@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"io/ioutil"
 	"os"
 
 	_ "github.com/lib/pq"
@@ -12,7 +13,7 @@ import (
 var db *sql.DB
 var log = logrus.New()
 
-func init() {
+func Init() {
 	//get params from environment variables
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
@@ -33,9 +34,26 @@ func init() {
 		log.WithError(err).Fatal("Error when check connect whit DB")
 
 	}
+	// Выполнение SQL-запроса для создания таблицы
+	filename := "сreateTable.sql" // Замените на имя вашего файла
+	if err := ExecuteSQLFromFile(db, filename); err != nil {
+		log.Fatal(err)
+	}
 }
 
 // provides access to the database connection
 func NewDB() *sql.DB {
 	return db
+}
+
+func ExecuteSQLFromFile(db *sql.DB, filename string) error {
+	sqlFile, err := ioutil.ReadFile(filename)
+	if err != nil {
+		return err
+	}
+
+	sqlQuery := string(sqlFile)
+
+	_, err = db.Exec(sqlQuery)
+	return err
 }
