@@ -13,6 +13,10 @@ type Repository struct {
 	db  *reform.DB
 	log *logrus.Entry
 }
+type Record interface {
+	PK() PK
+	SetPK(PK) error
+}
 
 func (r *Repository) EditNews(context *fiber.Ctx) error {
 	// Получаем параметр ID из URL
