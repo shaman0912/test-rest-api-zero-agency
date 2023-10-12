@@ -4,22 +4,36 @@ import (
 	"os"
 
 	"github.com/gofiber/fiber/v2"
-	api "github.com/shaman0912/test-rest-api-zero-agency/internal"
+	_ "github.com/lib/pq"
+	"github.com/shaman0912/test-rest-api-zero-agency/internal"
 	"github.com/shaman0912/test-rest-api-zero-agency/internal/database"
+
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	// Создание экземпляра Fiber
+
+	// Инициализация логгера
+	logger := logrus.New()
+	logger.SetFormatter(&logrus.JSONFormatter{})
+	logger.SetOutput(os.Stdout)
+
+	// Подключение к базе данных Postgres с использованием connection pool
+	db, err := database.ConnectToDB()
+	if err != nil {
+		logger.WithError(err).Error("Ошибка при выполнении connect  к БД")
+		os.Exit(1)
+	}
+
+	// создаем таблицы в БД
+	err = database.CreateTables(db, "createTables.sql")
+	if err != nil {
+		logger.WithError(err).Error("Ошибка при выполнении SQL-запросов из файла")
+		os.Exit(1)
+	}
+
 	app := fiber.New()
 
-	// Инициализация соединения с базой данных с использованием connection pool
-	db := database.NewDB()
-	defer db.Close()
+	internal.SetupRoutes(app)
 
-	// Настройка логирования с Logrus для вывода в терминал
-	logrus.SetOutput(os.Stdout)
-
-	// Передача экземпляра Fiber, базы данных и логгера в настройку маршрутов
-	api.SetupRoutes(app)
 }

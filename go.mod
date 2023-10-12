@@ -2,10 +2,9 @@ module github.com/shaman0912/test-rest-api-zero-agency
 
 go 1.21.1
 
-require github.com/gofiber/fiber/v2 v2.49.2
-
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/gofiber/fiber/v2 v2.49.2 // indirect
 	github.com/google/uuid v1.3.1 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
@@ -19,6 +18,4 @@ require (
 	github.com/valyala/fasthttp v1.49.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/sys v0.12.0 // indirect
-	gopkg.in/reform.v1 v1.5.1 // indirect
-	
 )
