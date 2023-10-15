@@ -26,12 +26,12 @@ func main() {
 	}
 
 	// создаем таблицы в БД
-	err = database.CreateTables(db, "createTables.sql")
+	err = database.CreateTables(db, "createTabless.sql")
 	if err != nil {
 		logger.WithError(err).Error("Ошибка при выполнении SQL-запросов из файла")
 		os.Exit(1)
 	}
-
+	defer db.Close()
 	app := fiber.New()
 
 	internal.SetupRoutes(app)

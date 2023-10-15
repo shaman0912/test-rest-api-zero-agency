@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 	"io/ioutil"
 
 	"github.com/sirupsen/logrus"
@@ -13,6 +14,7 @@ func CreateTables(db *sql.DB, filePath string) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println(filePath)
 
 	// Выполнение SQL-запросов
 	_, err = db.Exec(string(contents))

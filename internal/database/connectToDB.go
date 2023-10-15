@@ -28,13 +28,12 @@ func ConnectToDB() (*sql.DB, error) {
 		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		dbHost, dbPort, dbUser, dbPassword, dbName,
 	)
-
+	//fmt.Println("THIS is connStr", connStr)
 	// Открываем соединение с PostgreSQL
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close()
 
 	// Устанавливаем максимальное количество соединений в пуле
 	db.SetMaxOpenConns(10)
