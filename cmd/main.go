@@ -7,12 +7,13 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/shaman0912/test-rest-api-zero-agency/internal"
 	"github.com/shaman0912/test-rest-api-zero-agency/internal/database"
+	"gopkg.in/reform.v1"
+	"gopkg.in/reform.v1/dialects/postgresql"
 
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
-
 	// Инициализация логгера
 	logger := logrus.New()
 	logger.SetFormatter(&logrus.JSONFormatter{})
@@ -32,8 +33,11 @@ func main() {
 		os.Exit(1)
 	}
 	defer db.Close()
-	app := fiber.New()
 
-	internal.SetupRoutes(app)
+	dialect := postgresql.Dialect
+	reformDB := reform.NewDB(db, dialect, nil)
+
+	app := fiber.New()
+	internal.SetupRoutes(app, reformDB, logger)
 
 }
