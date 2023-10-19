@@ -1,25 +1,35 @@
--- Структура таблицы "News"
-CREATE TABLE IF NOT EXISTS "News" (
+-- Удалить таблицу News, если она существует
+DROP TABLE IF EXISTS "News";
+
+-- Удалить таблицу NewsCategories, если она существует
+DROP TABLE IF EXISTS "NewsCategories";
+
+-- Создание таблицы News
+CREATE TABLE "News" (
   "Id" bigserial PRIMARY KEY,
   "Title" text NOT NULL,
   "Content" text NOT NULL
 );
 
--- Структура таблицы "NewsCategories"
-CREATE TABLE IF NOT EXISTS "NewsCategories" (
+-- Создание таблицы NewsCategories
+CREATE TABLE "NewsCategories" (
   "NewsId" bigint NOT NULL,
   "CategoryId" bigint NOT NULL
 );
 
--- Создаем индексы для таблицы "News"
-CREATE INDEX IF NOT EXISTS "Idx_News_Id" ON "News" ("Id");
+-- Остальные операторы...
+
 
 -- Создаем индексы для таблицы "NewsCategories"
 CREATE INDEX IF NOT EXISTS "Idx_NewsCategories_NewsId" ON "NewsCategories" ("NewsId");
 CREATE INDEX IF NOT EXISTS "Idx_NewsCategories_CategoryId" ON "NewsCategories" ("CategoryId");
 
--- Вставка данных в таблицу "News"
-INSERT INTO "News" ("Title", "Content") VALUES ('Заголовок новости', 'Содержимое новости');
+CREATE UNIQUE INDEX "Unique_Title_Index" ON "News" ("Title");
 
--- Вставка данных в таблицу "NewsCategories"
-INSERT INTO "NewsCategories" ("NewsId", "CategoryId") VALUES (1, 2);
+
+INSERT INTO "News" ("Title", "Content") VALUES ('first', 'tratata');
+
+INSERT INTO "NewsCategories" ("NewsId", "CategoryId") VALUES (1,1);
+
+-- Подтвердить транзакцию и сохранить данные
+COMMIT;

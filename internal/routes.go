@@ -39,6 +39,6 @@ func SetupRoutes(app *fiber.App, db *reform.DB, logger *logrus.Logger) {
 		port = "3000" // По умолчанию используем порт 3000
 	}
 
-	logger.Info("Сервер запущен на порту %s", port)
+	log.Printf("Сервер запущен на порту %s", port)
 	log.Fatal(app.Listen(":" + port))
 }

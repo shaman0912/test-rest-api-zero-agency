@@ -2,41 +2,25 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/shaman0912/test-rest-api-zero-agency/internal/models"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/reform.v1"
 )
 
-var NewsModels reform.Table // Это ваша таблица
-
-// Ручка для получения списка новостей
 func ListNews(c *fiber.Ctx, db *reform.DB, logger *logrus.Logger) error {
+	// экземпляр таблицы News
+	newsTable := models.NewsTable
 
 	// Find records by IDs.
-	// Find records by IDs.
-	newsData, err := db.FindAllFrom(NewsModels, "id")
+	newsData, err := db.FindAllFrom(newsTable, "Id", 1, 2)
 	if err != nil {
-		logger.Error(err)
-		return err
+		log.Fatal(err)
 	}
-	fmt.Println(newsData)
-	// for _, p := range newsData {
-	// 	fmt.Println(p)
-	// }
-	// // Преобразуйте новости в нужный формат для ответа
-	//var response []fiber.Map
-	// for _, n := range newsData {
-	// 	response = append(response, fiber.Map{
-	// 		"Id":      n.ID,
-	// 		"Title":   n.Title,
-	// 		"Content": n.Content,
-	// 	})
-	// }
-
-	// return c.JSON(fiber.Map{
-	// 	"Success": true,
-	// 	"News":    response,
-	// })
-	return c.SendString("Welcome api")
+	for _, p := range newsData {
+		fmt.Println(p)
+	}
+	return nil
 }
