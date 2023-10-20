@@ -11,11 +11,15 @@ import (
 )
 
 func ListNews(c *fiber.Ctx, db *reform.DB, logger *logrus.Logger) error {
-	// экземпляр таблицы News
-	newsTable := models.NewsTable
+	// newsTable := models.NewsTable
+
+	// newsCategories := models.NewsCategoriesView
+
+	// fmt.Println("newsTable: ", newsTable)
+	// fmt.Println("newscATEGORIES: ", newsCategories)
 
 	// Find records by IDs.
-	newsData, err := db.FindAllFrom(newsTable, "Id", 1, 2)
+	newsData, err := db.FindAllFrom(models.NewsTable, "Id", 1, 2)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -23,4 +27,5 @@ func ListNews(c *fiber.Ctx, db *reform.DB, logger *logrus.Logger) error {
 		fmt.Println(p)
 	}
 	return nil
+
 }

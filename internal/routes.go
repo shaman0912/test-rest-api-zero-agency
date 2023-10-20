@@ -24,19 +24,17 @@ func welcome(c *fiber.Ctx) error {
 }
 
 func SetupRoutes(app *fiber.App, db *reform.DB, logger *logrus.Logger) {
-	// Создание группы маршрутов для API
 	api := app.Group("/")
 
 	listNewHandler := &NewsHandlers{db, logger}
 
-	// Регистрация маршрутов
 	api.Get("/wel", welcome)
 	api.Post("/edit/:Id", handlers.EditNews)
 	api.Get("/list", listNewHandler.listHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000" // По умолчанию используем порт 3000
+		port = "3000"
 	}
 
 	log.Printf("Сервер запущен на порту %s", port)

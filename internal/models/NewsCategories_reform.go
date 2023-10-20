@@ -28,8 +28,8 @@ func (v *newsCategoriesViewType) Name() string {
 // Columns returns a new slice of column names for that view or table in SQL database.
 func (v *newsCategoriesViewType) Columns() []string {
 	return []string{
-		"news_id",
-		"category_id",
+		"News_id",
+		"Categories_id",
 	}
 }
 
@@ -44,8 +44,8 @@ var NewsCategoriesView = &newsCategoriesViewType{
 		Type:    "NewsCategories",
 		SQLName: "NewsCategories",
 		Fields: []parse.FieldInfo{
-			{Name: "NewsID", Type: "int64", Column: "news_id"},
-			{Name: "Categories", Type: "int64", Column: "category_id"},
+			{Name: "NewsID", Type: "int64", Column: "News_id"},
+			{Name: "Categories", Type: "int64", Column: "Categories_id"},
 		},
 		PKFieldIndex: -1,
 	},
